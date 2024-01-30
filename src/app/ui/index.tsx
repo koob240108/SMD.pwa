@@ -1,4 +1,10 @@
+import { useMD_editor } from '../../common/md_utils/hook'
+
 export
 const App = () => {
-  return <div>hello</div>
+  const md_editor = useMD_editor()
+  return <div>
+    {md_editor.textarea}
+    <article dangerouslySetInnerHTML={{__html: md_editor.parsed}}></article>
+  </div>
 }
