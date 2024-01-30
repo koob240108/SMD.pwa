@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { parse } from 'marked'
 
+interface Textarea_props {
+  style?: React.CSSProperties,
+  className?: string,
+}
+
 export
 const useMD_editor = (interval = 300) => {
   const ref_textarea = useRef<HTMLTextAreaElement>(null)
@@ -21,6 +26,9 @@ const useMD_editor = (interval = 300) => {
         _parse()
     })
 
+    // auto focus
+    textarea.focus()
+
     async function _parse() {
       console.log('real parse')
       set_parsed(await parse(textarea.value))
@@ -29,7 +37,13 @@ const useMD_editor = (interval = 300) => {
   }, [])
 
   return {
-    textarea: <textarea ref={ref_textarea} />,
+    textarea: (props?: Textarea_props) =>
+      <textarea
+        style={props?.style}
+        className={props?.className}
+        ref={ref_textarea}
+      />
+    ,
     parsed,
   }
 }

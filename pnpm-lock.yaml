@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  last.css:
+    specifier: ^0.0.1
+    version: 0.0.1
   marked:
     specifier: ^11.2.0
     version: 11.2.0
@@ -1494,6 +1497,10 @@ packages:
     dependencies:
       json-buffer: 3.0.1
     dev: true
+
+  /last.css@0.0.1:
+    resolution: {integrity: sha512-BNhd3qP0hzofNJqmMAhU270uos67aA+Vk5BESX3KZpbBIJcqcLYCr2No0+hqbZkxI4wYsEesdmv4ax6w/yNJIw==}
+    dev: false
 
   /levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
