@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { parse } from 'marked'
 
-import { editor_content, editorchange_by_filechange } from '../../../ss/file'
+import { editor_content, editorchange_by_filechange, save_file } from '../../../ss/file'
+import { match_OS } from '../../../../common/utils'
 
 /** throttle interval in ms */
 const interval = 300
@@ -55,6 +56,22 @@ const useMD_editor = () => {
       }
     })()
   }, [sur2_editorchange_by_filechange])
+
+  // listen `save file`
+  useEffect(() => {
+    const listen_save = (evt: KeyboardEvent) => {
+      if (evt.key !== 's') return
+
+      console.debug({ metaKey: evt.metaKey, ctrlKey: evt.ctrlKey })
+      if (match_OS({ mac: evt.metaKey}) ?? evt.ctrlKey) {
+        console.log('saving file')
+        save_file()
+      }
+    }
+    document.body.addEventListener('keydown', listen_save)
+    
+    return () => document.body.removeEventListener('keydown', listen_save)
+  }, [])
 
   return {
     parsed,

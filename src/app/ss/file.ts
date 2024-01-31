@@ -6,6 +6,16 @@ const file_handle = State_nullable<FileSystemFileHandle>(null)
 export
 const useHas_file = () => file_handle.useVal() !== null
 
+export
+const save_file = async () => {
+  const handle = file_handle.get()
+  if (!handle)
+    throw Error('file not saved: no file')
+  const writable = await handle.createWritable()
+  await writable.write(editor_content.get())
+  await writable.close()
+}
+
 /** event: `editor change` caused by `file_handle change` */
 export
 const editorchange_by_filechange = State_event()
