@@ -39,6 +39,7 @@ const useMD_editor = () => {
 
     async function _parse() {
       console.log('real parse')
+      set_editor_content(() => textarea.value)
       set_parsed(await parse(textarea.value))
       last_parsing_at = new Date()
     }
@@ -47,6 +48,10 @@ const useMD_editor = () => {
   // listen `sur2_editorchange_by_filechange`
   useEffect(() => {
     ;(async () => {
+      // update textarea
+      console.log('update textarea', val_editor_content)
+      ref_textarea.current!.value = val_editor_content 
+      // parse
       if (val_editor_content) {
         console.log('real parse by filechange')
         set_parsed(await parse(val_editor_content)) 
@@ -64,6 +69,7 @@ const useMD_editor = () => {
 
       console.debug({ metaKey: evt.metaKey, ctrlKey: evt.ctrlKey })
       if (match_OS({ mac: evt.metaKey}) ?? evt.ctrlKey) {
+        evt.preventDefault()
         console.log('saving file')
         save_file()
       }
@@ -86,8 +92,6 @@ const useMD_editor = () => {
         padding: '3em',
       }}
       ref={ref_textarea}
-      value={val_editor_content}
-      onChange={evt => set_editor_content(() => evt.target.value)}
     />,
   }
 }

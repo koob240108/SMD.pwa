@@ -7,6 +7,11 @@ export
 const useHas_file = () => file_handle.useVal() !== null
 
 export
+const set_file_handle = (handle: FileSystemFileHandle | null) => {
+  file_handle.set(() => handle)
+}
+
+export
 const save_file = async () => {
   const handle = file_handle.get()
   if (!handle)
