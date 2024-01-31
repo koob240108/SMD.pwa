@@ -59,7 +59,7 @@ const useMD_editor = () => {
       // parse
       if (val_editor_content) {
         console.log('real parse by filechange')
-        set_parsed(await parse(val_editor_content)) 
+        set_parsed(await parse(val_editor_content))
       } else {
         console.log('set parsed with empty')
         set_parsed('')

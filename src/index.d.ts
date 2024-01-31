@@ -1,5 +1,6 @@
 interface File_picker_opts {
   multiple?: boolean
+  startIn: 'desktop'
 }
 
 interface File_saver_opts {

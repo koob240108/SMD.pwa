@@ -38,6 +38,7 @@ const Open_file = () => {
         }
         const handles = await window.showOpenFilePicker({
           multiple: false,
+          startIn: 'desktop',
         })
         set_file_handle(handles[0])
       }}
