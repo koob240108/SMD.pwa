@@ -13,6 +13,7 @@ const Edit_and_preview = () => {
   >
     {md_editor.textarea}
     <article
+      className='simple_style'
       dangerouslySetInnerHTML={{__html: md_editor.parsed}}
       style={{
         flex: 1,
