@@ -1,9 +1,14 @@
+import { State_event } from '../../common/state/event.ts'
 import { State, State_nullable } from '../../common/state/index.ts'
 
 const file_handle = State_nullable<FileSystemFileHandle>(null)
 
 export
 const useHas_file = () => file_handle.useVal() !== null
+
+/** event: `editor change` caused by `file_handle change` */
+export
+const editorchange_by_filechange = State_event()
 
 /**
  * This may not have been written to the hard disk.
@@ -14,13 +19,15 @@ const editor_content = State('')
 // listen the file handle changes, and update the editor content
 file_handle.subscribe(async () => {
   const handle = await file_handle.get()
+  let val: string
   if (!handle)
-    editor_content.set(() => '')
+    val = ''
   else {
     const file = await handle.getFile()
-    const content = await file.text()
-    editor_content.set(() => content)
+    val = await file.text()
   }
+  editor_content.set(() => val)
+  editorchange_by_filechange.emit()
 })
 
 interface LaunchQueue {

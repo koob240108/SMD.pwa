@@ -5,6 +5,7 @@ interface Editor_props {
   interval?: number
   val_editor: string
   set_editor: (calc: (old_val: string) => string) => void
+  sur2_editorchange_by_filechange: number
 }
 
 interface Textarea_props {
@@ -49,6 +50,14 @@ const useMD_editor = (editor_props: Editor_props) => {
       last_parsing_at = new Date()
     }
   }, [])
+
+  // listen `sur2_editorchange_by_filechange`
+  useEffect(() => {
+    ;(async () => {
+      console.log('real parse by flag')
+      set_parsed(await parse(editor_props.val_editor)) 
+    })()
+  }, [editor_props.sur2_editorchange_by_filechange])
 
   return {
     textarea: (props?: Textarea_props) =>

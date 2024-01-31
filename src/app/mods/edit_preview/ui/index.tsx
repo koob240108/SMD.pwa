@@ -1,13 +1,16 @@
 import { useMD_editor } from '../../../../common/md_utils/hook' // TODO: `@common` in tsconfig
-import { editor_content } from '../../../ss/file'
+import { editor_content, editorchange_by_filechange } from '../../../ss/file'
 
 export
 const Edit_and_preview = () => {
   const [val_editor_content, set_editor_content] = editor_content.useState()
+  const sur2_editorchange_by_filechange = editorchange_by_filechange.useSurveilled()
+
   // markdown editor
   const md_editor = useMD_editor({
     val_editor: val_editor_content,
     set_editor: set_editor_content,
+    sur2_editorchange_by_filechange, // surveilled to ...
   })
 
   return <div
