@@ -5,10 +5,30 @@ const Open_file = () => {
   return <div
     style={{
       height: '100vh',
-      display: 'grid',
-      placeItems: 'center',
+      display: 'flex',
+      gap: '1em',
+      alignItems: 'center',
+      justifyContent: 'center',
     }}
   >
+    <button
+      className='btn'
+      onClick={async () => {
+        if (!window.showSaveFilePicker) {
+          alert('Your browser does not support this feature. Please try Chrome, Edge or Firefox.')
+          return
+        }
+        set_file_handle(await window.showSaveFilePicker({
+          startIn: 'desktop',
+          types: [{
+            accept: {
+              'text/markdown': ['.md'],
+            },
+          }],
+        }))
+      }}
+    >New File</button>
+
     <button
       className='btn'
       onClick={async () => {
