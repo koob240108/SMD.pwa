@@ -1,29 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 import { parse } from 'marked'
 
-interface Editor_props {
-  interval?: number
-  val_editor: string
-  set_editor: (calc: (old_val: string) => string) => void
-  sur2_editorchange_by_filechange: number
-}
+import { editor_content, editorchange_by_filechange } from '../../../ss/file'
 
-interface Textarea_props {
-  style?: React.CSSProperties,
-  className?: string,
-}
+/** throttle interval in ms */
+const interval = 300
 
 /**
  * markdown editor hook
  * @return textarea element and parsed markdown string
  */
 export
-const useMD_editor = (editor_props: Editor_props) => {
-  const interval = editor_props.interval ?? 300
-  if (interval <= 0) throw Error ('interval must be greater than 0')
-
+const useMD_editor = () => {
   const ref_textarea = useRef<HTMLTextAreaElement>(null)
   const [parsed, set_parsed] = useState('')
+  const [val_editor_content, set_editor_content] = editor_content.useState()
+  const sur2_editorchange_by_filechange = editorchange_by_filechange.useSurveilled()
 
   // listen the raw `input` event for parsing with throttle
   useEffect(() => {
@@ -54,21 +46,31 @@ const useMD_editor = (editor_props: Editor_props) => {
   // listen `sur2_editorchange_by_filechange`
   useEffect(() => {
     ;(async () => {
-      console.log('real parse by flag')
-      set_parsed(await parse(editor_props.val_editor)) 
+      if (val_editor_content) {
+        console.log('real parse by filechange')
+        set_parsed(await parse(val_editor_content)) 
+      } else {
+        console.log('set parsed with empty')
+        set_parsed('')
+      }
     })()
-  }, [editor_props.sur2_editorchange_by_filechange])
+  }, [sur2_editorchange_by_filechange])
 
   return {
-    textarea: (props?: Textarea_props) =>
-      <textarea
-        style={props?.style}
-        className={props?.className}
-        ref={ref_textarea}
-        value={editor_props.val_editor}
-        onChange={evt => editor_props.set_editor(() => evt.target.value)}
-      />
-    ,
     parsed,
+    textarea: <textarea
+      style={{
+        border: 'none',
+        flex: 1,
+        backgroundColor: 'transparent',
+        color: 'inherit',
+        outline: 'none',
+        lineHeight: 1.38,
+        padding: '3em',
+      }}
+      ref={ref_textarea}
+      value={val_editor_content}
+      onChange={evt => set_editor_content(() => evt.target.value)}
+    />,
   }
 }
