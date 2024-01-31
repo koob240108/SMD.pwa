@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { parse } from 'marked'
 
-import { editor_content, editorchange_by_filechange, save_file } from '../../../ss/file'
+import { editor_content, editorchange_by_filechange, save_file, file_is_editing } from '../../../ss/file'
 import { match_OS } from '../../../../common/utils'
 
 /** throttle interval in ms */
@@ -27,6 +27,11 @@ const useMD_editor = () => {
     let last_parsing_at = new Date(0) // time of last parsing
     textarea.addEventListener('input', async () => {
       console.debug('inputing')
+      // update `file_is_editing state`
+      if (file_is_editing.get() === false)
+        file_is_editing.set(() => true)
+
+      // parse with throttle
       clearTimeout(throttle)
       if(new Date().getTime() - last_parsing_at.getTime() < interval)
         throttle = setTimeout(_parse, interval)

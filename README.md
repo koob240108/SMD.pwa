@@ -1,8 +1,11 @@
 # SMD.pwa
-SMD.pwa is a simple PWA to edit and preview markdown files.
+A simple markdown editor and previewer.
++ fast
++ tiny (less than 200kb without compression)
++ few btns
 
-BUT WHY ANOTHER markdown app?  
-Imagine you have a md file on desktop. Suddenly you may want to open it for either preview or editing. You might say, you can use vscode. It's very lightweight, and has many powerfull features. But how much time do you need to start a vscode editor? One second? Two seconds? Yes if your computor is good. But MY computor is not that good.
+[give it a try](https://koob240108.github.io/SMD.pwa/)
 
-## Development
-Github codespaces provide a https environment.
+
+## TODO
++ refactor state using `init`

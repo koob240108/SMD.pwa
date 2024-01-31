@@ -1,7 +1,11 @@
 import { State_event } from '../../common/state/event.ts'
 import { State, State_nullable } from '../../common/state/index.ts'
 
+export
 const file_handle = State_nullable<FileSystemFileHandle>(null)
+
+export
+const file_is_editing = State(false)
 
 export
 const useHas_file = () => file_handle.useVal() !== null
@@ -19,6 +23,7 @@ const save_file = async () => {
   const writable = await handle.createWritable()
   await writable.write(editor_content.get())
   await writable.close()
+  file_is_editing.set(() => false)
 }
 
 /** event: `editor change` caused by `file_handle change` */
@@ -62,7 +67,7 @@ const init_file_on_launch = () => {
     const file = params.files[0]
     if (file) {
       console.log('launch by clicking file')
-      file_handle.set(() => file)
+      set_file_handle(file)
     } else
       console.error('If there\'s no file, shouldn\'t this arrow function be executed')
   })
