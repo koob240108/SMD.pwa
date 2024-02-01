@@ -6,6 +6,5 @@ A simple markdown editor and previewer.
 
 [give it a try](https://koob240108.github.io/SMD.pwa/)
 
-
 ## TODO
 + refactor state using `init`
