@@ -8,7 +8,6 @@ const Edit_and_preview = () => {
   return <div
     style={{
       display: 'flex',
-      height: '100vh',
     }}
   >
     {md_editor.textarea}
@@ -17,8 +16,10 @@ const Edit_and_preview = () => {
       dangerouslySetInnerHTML={{__html: md_editor.parsed}}
       style={{
         flex: 1,
-        padding: '0 3em',
+        padding: '0 3em 2em',
         borderLeft: '1px solid rgba(var(--fc), .188)',
+        height: '100vh',
+        overflowY: 'auto',
       }}
     />
   </div>

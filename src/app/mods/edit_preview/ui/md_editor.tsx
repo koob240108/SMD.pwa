@@ -95,6 +95,8 @@ const useMD_editor = () => {
         outline: 'none',
         lineHeight: 1.38,
         padding: '3em',
+        height: '100vh',
+        overflowY: 'auto',
       }}
       ref={ref_textarea}
     />,
