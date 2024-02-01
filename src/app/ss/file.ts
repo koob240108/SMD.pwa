@@ -50,18 +50,14 @@ file_handle.subscribe(async () => {
   editorchange_by_filechange.emit()
 })
 
-interface LaunchQueue {
-  setConsumer(callback: (params: { files: FileSystemFileHandle[] }) => void): void
-}
-
 export
 const init_file_on_launch = () => {
   console.log('initialize file_handle on launch')
-  if ('launchQueue' in window === false) {
+  const lq = window.launchQueue
+  if (!lq) {
     console.error('window.launchQueue not supported')
     return
   }
-  const lq = (window as unknown as { launchQueue: LaunchQueue}).launchQueue
 
   lq.setConsumer(params => {
     const file = params.files[0]
